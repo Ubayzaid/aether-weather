@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101b35">
+  <title>Aether Weather — Cuaca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Aether Weather beranda">
+        <span class="brand-mark">✳</span><span>AETHER<span class="brand-light">WEATHER</span></span>
+      </a>
+      <div class="top-actions">
+        <div class="search-wrap">
+          <span class="search-icon">⌕</span>
+          <input id="searchInput" type="search" placeholder="Cari kota..." autocomplete="off" aria-label="Cari kota">
+          <button id="clearSearch" class="clear-search" aria-label="Hapus pencarian">×</button>
+          <div id="suggestions" class="suggestions hidden"></div>
+        </div>
+        <button class="icon-btn" id="locationBtn" title="Gunakan lokasi saya" aria-label="Gunakan lokasi saya">◎</button>
+        <button class="icon-btn" id="unitBtn" title="Ubah satuan">°C</button>
+        <button class="icon-btn" id="themeBtn" title="Ganti tema" aria-label="Ganti tema">☾</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero-card weather-scene" id="heroScene">
+        <div class="scene-orb orb-a"></div><div class="scene-orb orb-b"></div>
+        <div class="hero-top">
+          <div>
+            <div class="eyebrow"><span class="live-dot"></span> KONDISI SAAT INI</div>
+            <h1 id="cityName">Memuat lokasi...</h1>
+            <p class="date-line" id="dateLine">Memperbarui data cuaca</p>
+          </div>
+          <div class="updated" id="updatedLabel">LIVE WEATHER</div>
+        </div>
+        <div class="hero-main">
+          <div class="temperature-block">
+            <div class="temperature" id="currentTemp">--<span>°</span></div>
+            <div class="condition" id="conditionText">Mengambil data cuaca...</div>
+            <div class="feels-like" id="feelsLike">Terasa seperti --°</div>
+          </div>
+          <div class="hero-weather-icon" id="heroIcon" aria-hidden="true">🌤️</div>
+        </div>
+        <div class="hero-bottom">
+          <div class="sun-track">
+            <div class="sun-label"><span>☀</span> <span id="sunrise">--:--</span></div>
+            <div class="sun-line"><span class="sun-progress" id="sunProgress"></span><i id="sunDot"></i></div>
+            <div class="sun-label"><span>☾</span> <span id="sunset">--:--</span></div>
+          </div>
+          <div class="hero-summary" id="heroSummary">Cuaca hari ini sedang dimuat.</div>
+        </div>
+      </section>
+
+      <section class="metric-grid" aria-label="Detail cuaca">
+        <article class="metric-card"><div class="metric-heading"><span class="metric-icon">💧</span> KELEMBAPAN</div><strong id="humidity">--%</strong><small id="humidityNote">Kelembapan udara</small><div class="mini-meter"><span id="humidityMeter"></span></div></article>
+        <article class="metric-card"><div class="metric-heading"><span class="metric-icon">🌬️</span> ANGIN</div><strong id="wind">-- <em>km/j</em></strong><small id="windNote">Kecepatan angin</small><div class="wind-direction" id="windDirection">Arah angin --</div></article>
+        <article class="metric-card"><div class="metric-heading"><span class="metric-icon">☔</span> PELUANG HUJAN</div><strong id="rain">--%</strong><small id="rainNote">Kemungkinan presipitasi</small><div class="mini-meter rain-meter"><span id="rainMeter"></span></div></article>
+        <article class="metric-card"><div class="metric-heading"><span class="metric-icon">☀️</span> INDEKS UV</div><strong id="uv">--</strong><small id="uvNote">Memeriksa intensitas UV</small><div class="uv-scale"><span></span><span></span><span></span><span></span><span></span></div></article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel hourly-panel">
+          <div class="section-heading"><div><span class="eyebrow">JANGKA PENDEK</span><h2>Perkiraan per jam</h2></div><span class="section-meta" id="hourlyDate">24 JAM KE DEPAN</span></div>
+          <div class="hourly-list" id="hourlyList"><div class="loading-line">Menyiapkan prakiraan per jam...</div></div>
+        </article>
+        <article class="panel sun-panel">
+          <div class="section-heading"><div><span class="eyebrow">SIANG & MALAM</span><h2>Matahari hari ini</h2></div><span class="sun-big">☀</span></div>
+          <div class="sun-times">
+            <div><span class="sun-time-icon">🌅</span><div><small>MATAHARI TERBIT</small><strong id="sunriseBig">--:--</strong></div></div>
+            <div><span class="sun-time-icon">🌇</span><div><small>MATAHARI TERBENAM</small><strong id="sunsetBig">--:--</strong></div></div>
+          </div>
+          <div class="daylight-box"><span>Durasi siang</span><strong id="daylight">-- jam</strong></div>
+        </article>
+      </section>
+
+      <section class="panel weekly-panel">
+        <div class="section-heading"><div><span class="eyebrow">LIHAT KE DEPAN</span><h2>Prakiraan 7 hari</h2></div><span class="section-meta">MINGGU INI</span></div>
+        <div class="weekly-list" id="weeklyList"><div class="loading-line">Memuat prakiraan mingguan...</div></div>
+      </section>
+
+      <section class="panel details-panel">
+        <div class="section-heading"><div><span class="eyebrow">INFO TAMBAHAN</span><h2>Kondisi atmosfer</h2></div><span class="section-meta">DATA OPEN-METEO</span></div>
+        <div class="detail-grid">
+          <div class="detail-item"><span>🌡️ Suhu terasa</span><strong id="detailFeels">--°</strong></div>
+          <div class="detail-item"><span>🌫️ Tutupan awan</span><strong id="cloud">--%</strong></div>
+          <div class="detail-item"><span>🧭 Tekanan udara</span><strong id="pressure">-- hPa</strong></div>
+          <div class="detail-item"><span>👁️ Jarak pandang</span><strong id="visibility">-- km</strong></div>
+        </div>
+      </section>
+    </main>
+    <footer><span class="footer-brand">✳ AETHER WEATHER</span><span>Data cuaca oleh <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a> · Dibuat untuk melihat cuaca dengan lebih indah.</span></footer>
+    <div id="toast" class="toast" role="status"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
